@@ -103,22 +103,7 @@ public class HttpClientUtil {
                 while (paramKeys.hasNext()) {
                     String key = (String) paramKeys.next();
                     Object value = params.get(key);
-                    if (value != null && value instanceof String && !value.equals("")) {
-                        form[formIndex] = new NameValuePair(key, (String) value);
-                        formIndex++;
-                    } else if (value != null && value instanceof String[] &&
-                            ((String[]) value).length > 0) {
-                        NameValuePair[] tempForm =
-                                new NameValuePair[form.length + ((String[]) value).length - 1];
-                        for (int i = 0; i < formIndex; i++) {
-                            tempForm[i] = form[i];
-                        }
-                        form = tempForm;
-                        for (String v : (String[]) value) {
-                            form[formIndex] = new NameValuePair(key, (String) v);
-                            formIndex++;
-                        }
-                    } else {
+                    if (value != null) {
                         form[formIndex] = new NameValuePair(key, JSON.toJSONString(value));
                         formIndex++;
                     }
@@ -139,14 +124,7 @@ public class HttpClientUtil {
                     while (paramKeys.hasNext()) {
                         String key = (String) paramKeys.next();
                         Object value = params.get(key);
-                        if (value != null && value instanceof String && !value.equals("")) {
-                            getUrl.append(key).append("=").append(value).append("&");
-                        } else if (value != null && value instanceof String[] &&
-                                ((String[]) value).length > 0) {
-                            for (String v : (String[]) value) {
-                                getUrl.append(key).append("=").append(v).append("&");
-                            }
-                        } else {
+                        if (value != null){
                             getUrl.append(key).append("=").append(JSON.toJSONString(value)).append("&");
                         }
                     }
