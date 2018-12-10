@@ -1,4 +1,4 @@
-package com.se.util;
+package com.se.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.httpclient.*;
@@ -139,20 +139,19 @@ public class HttpClientUtil {
             }
 
             client.executeMethod(httpMethod);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    httpMethod.getResponseBodyAsStream(), "ISO-8859-1"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpMethod.getResponseBodyAsStream(), "ISO-8859-1"));
             String line = null;
-            String html = null;
+            StringBuilder sb = null;
             while ((line = reader.readLine()) != null) {
-                if (html == null) {
-                    html = "";
+                if (sb == null) {
+                    sb = new StringBuilder();
                 } else {
-                    html += "\r\n";
+                    sb.append("\r\n");
                 }
-                html += line;
+                sb.append(line);
             }
-            if (html != null) {
-                result = new String(html.getBytes("ISO-8859-1"), charset);
+            if (sb != null) {
+                result = new String(sb.toString().getBytes("ISO-8859-1"), charset);
             }
         } catch (SocketTimeoutException e) {
             System.out.println("连接超时[" + url + "]");
